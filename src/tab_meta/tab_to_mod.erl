@@ -54,7 +54,7 @@ main() ->
                     put(pool, I#tab_fields.pool),
                     TabName = I#tab_fields.tab_name,
                     {Data, Hrl} = to_erl(TabName, I#tab_fields.old_fields, I#tab_fields.fields),
-                    file:write_file(<<"./src/auto/mysql/", TabName/binary, ".erl">>, Data),
+                    file:write_file(<<"./src/auto/mysql/mysql_", TabName/binary, ".erl">>, Data),
                     Hrl
                 end, tab_lookup:tab_fields(DBPools)),
             file:write_file(<<"./src/auto/mysql/mysql_tab_record.hrl">>, AllRecord)

@@ -19,7 +19,7 @@ to_module(Mod) ->
 %%% @doc 自动生成，请不要手动编辑
 %%%
 %%%-------------------------------------------------------------------
--module("/utf8, Mod/binary, ").
+-module(mysql_"/utf8, Mod/binary, ").
 
 -include(\"mysql_tab_record.hrl\").
 
