@@ -15,23 +15,18 @@
 ]).
 
 escript(Arg) ->
-    TProto = lists:nth(1, Arg),
-    TDef = lists:nth(2, Arg),
-    escriptize(["parse_tool/ebin", TProto, TDef]).
+    escriptize("parse_tool/ebin",Arg).
 
 
-escriptize([LoadFiles, TProto, TDef]) ->
-    BeamBin = usort(load_files(LoadFiles, "ebin")),
+escriptize(Ebins, ToEscript) ->
+    BeamBin = usort(load_files(Ebins, "ebin")),
     {ok, {"mem", Zip}} = zip:create("mem", BeamBin, [memory]),
-    Head = <<"#!/usr/bin/env escript\n%% -*- erlang -*-\n%%! -pa ", (list_to_binary(LoadFiles))/binary, "\n">>,
+    Head = <<"#!/usr/bin/env escript\n%% -*- erlang -*-\n%%! -pa ", (list_to_binary(Ebins))/binary, "\n">>,
     
     FileBin = iolist_to_binary([Head, Zip]),
     
-    TProtoFile = atom_to_list(TProto),
-    TDefFile = atom_to_list(TDef),
-    [file:write_file(ToFile, FileBin) || ToFile <- [TProtoFile, TDefFile]],
-    os:cmd("chmod 777 " ++ TProtoFile),
-    os:cmd("chmod 777 " ++ TDefFile).
+    [file:write_file(atom_to_list(ToFile), FileBin) || ToFile <- ToEscript],
+    [os:cmd("chmod 777 " ++ atom_to_list(I)) || I <- ToEscript].
 
 
 load_files(PrePath, Dir) ->
