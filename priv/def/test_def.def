@@ -13,3 +13,7 @@ enum err{
     ERR_ROLE_NOT_EXIST_1                  = 1:err_role_not_exist_1     %% 角色不存在
 }
 
+enum err_test{
+    test:atom,
+    test_1:atom
+}

@@ -1,7 +1,6 @@
 
 proto -> 'proto' char '=' integer  '{' client server '}'.
 enum -> 'enum' atom_constant '{' line_constant '}'.
-struct -> 'struct' atom_constant '{' atom_constant_2 '}'.
 
 all_proto -> 'all_proto' '[' atom_constant_2 ']' '{' line_constant '}';
 all_proto -> 'all_proto' '[' ']' '{' line_constant '}';

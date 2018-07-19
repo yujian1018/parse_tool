@@ -46,7 +46,7 @@ head(Mod, Type) ->
             is_binary(Type) -> <<"-export([", Type/binary, "]).">>;
             true -> <<"-compile(export_all).">>
         end,
-    
+
     <<(head())/binary, "
 
 -module('", Mod/binary, "').
@@ -62,7 +62,11 @@ enum(FunName, KVList) ->
     FunFoldl =
         fun(VO, {ErlAcc, HrlAcc}) ->
             K = VO#line_constant.k,
-            K2 = VO#line_constant.k2,
+            K2 =
+                if
+                    VO#line_constant.k2 =:= <<"atom">> -> K;
+                    true -> VO#line_constant.k2
+                end,
             V = VO#line_constant.v,
             Anno = if
                        VO#line_constant.anno =:= <<>> -> <<>>;
@@ -103,7 +107,7 @@ enum(FunName, KVList) ->
                     Bs),
                 <<FunName/binary, "_b() -> [", BsBin/binary, "].">>
         end,
-    
+
     AsAll =
         case [VO#line_constant.v || VO <- KVList, VO#line_constant.v =/= undefined] of
             [] -> <<FunName/binary, "_a() -> [].">>;
@@ -211,7 +215,7 @@ proto_json_decode(_ModNum, FunName, [ProtoItem]) ->
                             is_list(K2) ->
                                 Arg1 = list_to_binary(string:join([string:to_upper(binary_to_list(I#atom_constant_2.k)) || I <- K2], ", ")),
                                 Arg = <<"{", Arg1/binary, "}">>,
-                                
+
                                 Arg2 = list_to_binary(string:join(["{<<\"" ++ binary_to_list(I#atom_constant_2.k) ++ "\">>, " ++ string:to_upper(binary_to_list(I#atom_constant_2.k)) ++ "}" || I <- K2], ", ")),
                                 Arg3 = <<"{[", Arg2/binary, "]}">>,
                                 <<"[", Arg/binary, " || ", Arg3/binary, " <- ", KUpper/binary, "]">>;
@@ -225,7 +229,7 @@ proto_json_decode(_ModNum, FunName, [ProtoItem]) ->
                     end
                 end,
             RetErl = lists:foldl(FunFoldl, <<>>, ProtoItem#proto_item.k),
-            
+
             FunArgFoldl =
                 fun(VO, ArgAcc) ->
                     K = VO#atom_constant.k,
@@ -266,7 +270,7 @@ proto_binary_encode(ModNum, FunName, [ProtoItem]) ->
                                       [I] -> list_to_binary(I);
                                       Items -> <<"{", (list_to_binary(string:join(Items, ", ")))/binary, "}">>
                                   end,
-                            
+
                             FunMap =
                                 fun(Constant2) ->
                                     Constant2K2 = list_to_binary(string:to_upper(binary_to_list(Constant2#atom_constant_2.k))),
@@ -284,7 +288,7 @@ proto_binary_encode(ModNum, FunName, [ProtoItem]) ->
                     end
                 end,
             ErlList = lists:foldl(FunFoldlList, <<>>, ProtoItem#proto_item.k),
-            
+
             FunFoldlBin =
                 fun(VO, ErlBinAcc) ->
                     K = VO#atom_constant.k,
@@ -347,7 +351,7 @@ proto_binary_decode(_ModNum, FunName, [ProtoItem]) ->
                     end
                 end,
             RetErl = lists:foldl(FunFoldl, <<>>, ProtoItem#proto_item.k),
-            
+
             FunArgFoldl =
                 fun(VO, {ArgInputAcc, ArgOutputAcc}) ->
                     K = VO#atom_constant.k,

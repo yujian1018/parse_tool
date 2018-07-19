@@ -12,13 +12,13 @@ st:
 
 
 def:
-	rm -rf src/auto/def
-	escript t_def priv/def/ src/auto/def/
+	rm -rf src/_auto/def
+	escript t_def priv/def/ src/_auto/def/
 
 
 proto:
-	rm -rf src/auto/proto
-	escript t_proto priv/proto/ src/auto/proto/ priv/docroot ../../etc/def/global
+	rm -rf src/_auto/proto
+	escript t_proto priv/proto/ src/_auto/proto/ priv/docroot ../../etc/def/global
 
 
 mysql:

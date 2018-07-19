@@ -1,6 +1,6 @@
 .rebar/
 ebin/
-src/auto
+_auto
 t_def
 t_proto
 erl_crash.dump
