@@ -80,7 +80,20 @@
             </div>
         </div>
         <div class="p_content">
-            <h3>1.5 form表单提交方式</h3>
+            <h3>1.5 签名</h3>
+                <table cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                    <tr>
+                        <td>签名格式</td>
+                        <td>http://HOST/api?date=1476495339&sign=670ac979a50468fdf8ab33ad599942b5</td>
+                    </tr>
+                    <tr><td>date</td><td>当前请求时间戳(秒数)</td></tr>
+                    <tr><td>sign</td><td>md5("date="+date+"&key=约定好的字符串")</td></tr>
+                    </tbody>
+                </table>
+        </div>
+        <div class="p_content">
+            <h3>1.6 form表单提交方式</h3>
             <div class="code_source">
     			<pre class="code_show">
 %%html模拟form表单提交
@@ -94,11 +107,10 @@
 &lt;/form&gt;
     			</pre>
             </div>
-
         </div>
 
         <div class="p_content">
-            <h3>1.6 浏览器禁止cookie解决方案</h3>
+            <h3>1.7 浏览器禁止cookie解决方案</h3>
             <div class="code_source">
     			<pre class="code_show">
 http无状态，当浏览器禁用cookie后，无法正常使用账户体系。
