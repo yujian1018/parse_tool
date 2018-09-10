@@ -65,6 +65,7 @@ enum(FunName, KVList) ->
             K2 =
                 if
                     VO#line_constant.k2 =:= <<"atom">> -> K;
+                    VO#line_constant.k2 =:= <<"binary">> -> <<"<<\"", K/binary, "\">>">>;
                     true -> VO#line_constant.k2
                 end,
             V = VO#line_constant.v,
