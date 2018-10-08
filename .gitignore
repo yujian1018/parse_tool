@@ -1,5 +1,6 @@
-.rebar/
-ebin/
+.rebar3
+.rebar
+ebin
 _auto
 t_def
 t_proto

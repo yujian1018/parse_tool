@@ -1,6 +1,8 @@
 
 make:
 	./rebar co
+	./rebar clean
+	./bootstrap.sh
 
 
 cl:

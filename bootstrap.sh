@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-./rebar cl
-./rebar co
 
 cp priv/t_yecc.yrl ebin
 cp -rf priv/api/ ebin
