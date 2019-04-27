@@ -1,7 +1,7 @@
 
 make:
-	./rebar co
 	./rebar clean
+	./rebar co
 	./bootstrap.sh
 
 
