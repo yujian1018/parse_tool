@@ -123,6 +123,10 @@ get_grammar(Key) ->
 
 set_grammar(S) ->
 %%    {ok, S} = file:read_file(PathFile),
+%%    ?LOG("aaaaaaaaaaaaaaaa:~p", [S]),
+    %% windows换行符 \r\n -> \n
+    S2 = binary:replace(S, <<"\r\n">>, <<"\n">>, [global]),
+
     FunFoldl =
         fun
             (<<>>, KvList) -> KvList;
@@ -141,5 +145,5 @@ set_grammar(S) ->
                         ?ERROR("syntax error, line:~p~n", [Line])
                 end
         end,
-    List = lists:foldl(FunFoldl, [], binary:split(S, ?RETURN_CHAR, [global, trim_all])),
+    List = lists:foldl(FunFoldl, [], binary:split(S2, ?RETURN_CHAR, [global, trim_all])),
     [put(K, V) || {K, V} <- List].

@@ -5,3 +5,4 @@ _auto
 t_def
 t_proto
 erl_crash.dump
+*.lock
